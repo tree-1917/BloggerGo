@@ -39,7 +39,7 @@ This project allows you to **create, read, and delete blog posts**.
 1. Clone the repository:
 
 ```bash
-git clone <your-repo-url>
+git clone https://github.com/tree-1917/BloggerGo.git
 cd blog_apis
 ````
 
