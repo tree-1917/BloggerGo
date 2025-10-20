@@ -1,0 +1,122 @@
+basePath: /
+definitions:
+  main.Blog:
+    properties:
+      content:
+        example: This is a sample blog post.
+        type: string
+      id:
+        example: "1"
+        type: string
+      title:
+        example: My First Blog
+        type: string
+    type: object
+  main.ErrorResponse:
+    properties:
+      error:
+        example: Blog not found
+        type: string
+    type: object
+  main.SuccessResponse:
+    properties:
+      message:
+        example: Blog deleted successfully
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: Simple Go Blog API with Swagger documentation.
+  title: Blog API Example
+  version: "1.0"
+paths:
+  /blog:
+    post:
+      consumes:
+      - application/json
+      description: Add a new blog post
+      parameters:
+      - description: Blog Data
+        in: body
+        name: blog
+        required: true
+        schema:
+          $ref: '#/definitions/main.Blog'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/main.Blog'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/main.ErrorResponse'
+      summary: Create a new blog
+      tags:
+      - blogs
+  /blog/{id}:
+    delete:
+      description: Delete a specific blog post by its ID
+      parameters:
+      - description: Blog ID
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.SuccessResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/main.ErrorResponse'
+      summary: Delete a blog by ID
+      tags:
+      - blogs
+    get:
+      consumes:
+      - application/json
+      description: Retrieve blog details by its ID
+      parameters:
+      - description: Blog ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.Blog'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/main.ErrorResponse'
+      summary: Get a blog by ID
+      tags:
+      - blogs
+  /blogs:
+    get:
+      consumes:
+      - application/json
+      description: Retrieve a list of all blogs
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/main.Blog'
+            type: array
+      summary: Get all blogs
+      tags:
+      - blogs
+swagger: "2.0"
